@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.automation.test</groupId>
+    <artifactId>example</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+
+        <maven-surefire-plugin>2.22.2</maven-surefire-plugin>
+        <maven-compiler-plugin>3.8.1</maven-compiler-plugin>
+        <maven.surefire.plugin.version>2.21.0</maven.surefire.plugin.version>
+        <allure-version>2.14.0</allure-version>
+        <allure.maven.version>2.10.0</allure.maven.version>
+        <allure.report.version>2.10.0</allure.report.version>
+        <aspectj.version>1.9.1</aspectj.version>
+        <parallelSessions>4</parallelSessions>
+        <tagName>@add</tagName>
+        <tagNameTwo>@add</tagNameTwo>
+        <tagNameThree>@add</tagNameThree>
+        <ignoreTag>@ignore</ignoreTag>
+        <ignoreTagTwo>@ignore</ignoreTagTwo>
+        <wipTag>@wip</wipTag>
+        <dryRun>false</dryRun>
+        <runner>TestNgRunner</runner>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.tidal-code</groupId>
+            <artifactId>wave</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.tidal-code</groupId>
+            <artifactId>flow</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.tidal-code</groupId>
+            <artifactId>cukes</artifactId>
+            <version>0.0.8</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure.maven.version}</version>
+                <configuration>
+                    <reportVersion>${allure.report.version}</reportVersion>
+                    <resultsDirectory>${basedir}/target/allure-results</resultsDirectory>
+                    <reportDirectory>${basedir}/target/allure-report</reportDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <includes>
+                        <include>**/${runner}*.*</include>
+                    </includes>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        -Dcucumber.plugin="io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, pretty,
+                        junit:target/junit-reports/${runner}.xml"
+                        -Dcucumber.filter.tags="(${tagName} or ${tagNameTwo} or ${tagNameThree}) and not (${ignoreTag}
+                        or ${wipTag})"
+                        -Dcucumber.execution.dry-run=${dryRun}
+                    </argLine>
+                    <systemProperties>
+                        <property>
+                            <name>parallel</name>
+                            <value>methods</value>
+                        </property>
+                        <property>
+                            <name>perCoreThreadCount</name>
+                            <value>false</value>
+                        </property>
+                        <property>
+                            <name>dataproviderthreadcount</name>
+                            <value>${parallelSessions}</value>
+                        </property>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${basedir}/target/allure-results</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin}</version>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+
+</project>
