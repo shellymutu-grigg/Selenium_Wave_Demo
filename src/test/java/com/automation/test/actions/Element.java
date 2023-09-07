@@ -4,6 +4,7 @@ import com.automation.test.data.TextData;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
+
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Objects;
+
+import static com.tidal.wave.webelement.ElementFinder.findAll;
 
 @Slf4j
 public class Element {
@@ -33,9 +36,9 @@ public class Element {
        return (!webElements.isEmpty()) ? webElements : null;
     }
 
-    public static boolean isPresent(By by) {
-        List<WebElement> list = Element.getElements(by);
-        return list != null && !list.isEmpty();
+    public static boolean isPresent(String elementText) {
+        logger.info("{} is the elementText and isPresent(): {}", elementText, findAll(elementText).isPresent());
+        return findAll(elementText).isPresent();
     }
 
     public static void click(By by, boolean list){

@@ -3,17 +3,24 @@ package com.automation.test.processes;
 import com.automation.test.data.ConfigData;
 import com.automation.test.data.LocalStore;
 import com.automation.test.actions.Get;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.ITestListener;
 
 import com.automation.test.data.PageTitleData;
 import com.automation.test.data.TextData;
 import com.automation.test.actions.Element;
+import com.automation.test.locators.LoginLocators;
 
 import java.util.Objects;
 
+import static com.tidal.wave.webelement.ElementFinder.findAll;
+
+@Slf4j
 public class LoginPage implements ITestListener{
 	String email = System.getenv(ConfigData.AMAZON_USERNAME);
 	By continueButtonBy = By.id("continue");
@@ -37,9 +44,12 @@ public class LoginPage implements ITestListener{
 	public LogoutPage initialiseLogoutPage() {
 		return new LogoutPage();
 	}
-	
+
+	static Logger logger = LoggerFactory.getLogger(Element.class);
+
 	public void navigateToURL() {
-		if (Element.isPresent(tryDifferentImageBy)) {
+		if (findAll(LoginLocators.TRY_DIFFERENT_IMAGE_ID).isPresent()) {
+			logger.info("{} is the elementText and isPresent(): {}", LoginLocators.TRY_DIFFERENT_IMAGE_ID, findAll(LoginLocators.TRY_DIFFERENT_IMAGE_ID).isPresent());
 			Element.click(tryDifferentImageBy, false);
 		}
 		else if(Element.getElement(landingPageBy).isDisplayed()) {
@@ -80,13 +90,13 @@ public class LoginPage implements ITestListener{
 	
 	public String findLoginFailureText() {
 		String failureText = "";
-		if(Element.isPresent(loginFailAlert)) {
+		if(Element.isPresent(LoginLocators.LOGIN_FAIL_ALERT_ID)) {
 			failureText = TextData.LOGIN_FAILURE_ALERT_TEXT;
 		}
-		else if(Element.isPresent(loginFailPuzzle)) {
+		else if(Element.isPresent(LoginLocators.LOGIN_FAIL_PUZZLE_ID)) {
 			failureText =  TextData.LOGIN_PUZZLE_TEXT;
 		}
-		else if(Element.isPresent(loginFailImportantMessage)) {
+		else if(Element.isPresent(LoginLocators.LOGIN_FAIL_IMPORANT_MESSAGE_ID)) {
 			failureText =  TextData.LOGIN_FAILURE_IMPORTANT_MESSAGE_TEXT;
 		}
 		return failureText;
@@ -94,15 +104,15 @@ public class LoginPage implements ITestListener{
 	
 	public String loginFail() {
 		String loginFailStatus = "";
-		if(Element.isPresent(loginFailAlert)) {
+		if(Element.isPresent(LoginLocators.LOGIN_FAIL_ALERT_ID)) {
 			loginFailStatus = TextData.LOGIN_FAILURE_ALERT_TEXT;
 			validateLoginFailure(loginFailAlertMessageText, TextData.LOGIN_FAILURE_ALERT_TEXT);
 		}
-		else if(Element.isPresent(loginFailPuzzle)) {
+		else if(Element.isPresent(LoginLocators.LOGIN_FAIL_PUZZLE_ID)) {
 			loginFailStatus =  TextData.LOGIN_PUZZLE_TEXT;
 			validateLoginFailure(loginFailPuzzleMessageText, TextData.LOGIN_PUZZLE_TEXT);
 		}
-		else if(Element.isPresent(loginFailImportantMessage)) {
+		else if(Element.isPresent(LoginLocators.LOGIN_FAIL_IMPORANT_MESSAGE_ID)) {
 			loginFailStatus = TextData.LOGIN_FAILURE_IMPORTANT_MESSAGE_TEXT;
 			validateLoginFailure(loginFailImportantMessageText, TextData.LOGIN_FAILURE_IMPORTANT_MESSAGE_TEXT);
 		}
@@ -115,7 +125,6 @@ public class LoginPage implements ITestListener{
 	}
 
 	public void completeLogin(String password, LoginPage loginPage) {
-		//WebDriver webDriver = (WebDriver) LocalStore.getObject(ConfigData.SYSTEM_PROPERTY_WEBDRIVER);
 		loginPage.checkForPreviousLoginFailure();
 
 		String pageTitle;
@@ -128,15 +137,9 @@ public class LoginPage implements ITestListener{
 			pageTitle = PageTitleData.LANDING_PAGE_TITLE;
 			pageText = TextData.LANDING_PAGE_SIGN_IN_TEXT;
 		}
-		//TestAssert.pageTitle("navigateToURL()", pageTitle, webDriver.getTitle());
-		//TestAssert.elementNotNull(Element.getElement(By.xpath("//*[contains(text(), '"+ pageText +"')]")), "navigateToURL()");
-
 		loginPage.navigateToLanding();
-		//TestAssert.pageTitle("navigateToLanding()", PageTitleData.SIGN_IN_PAGE_TITLE, webDriver.getTitle());
-		//TestAssert.elementNotNull(Element.getElement(By.xpath("//*[contains(text(), '"+ TextData.SIGN_IN_TEXT +"')]")), "navigateToLanding()");
 
 		loginPage.enterUserEmail(email);
-		//TestAssert.elementNotNull(Element.getElement(By.xpath("//*[contains(text(), '"+ TextData.KEEP_SIGNED_IN_TEXT +"')]")), "enterUserEmail(email)");
 
 		loginPage.enterUserPassword(password);
 	}

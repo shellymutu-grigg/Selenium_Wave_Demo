@@ -15,6 +15,7 @@ import java.lang.reflect.Method;
 @Listeners(ExtentListeners.class)
 @Slf4j
 public class LoginSuccessTest extends TestSetup{
+	String email = System.getenv(ConfigData.AMAZON_USERNAME);
 	String password = System.getenv(ConfigData.AMAZON_PASSWORD_SUCCESS);
 
 	Logger logger = LoggerFactory.getLogger(LoginSuccessTest.class);
@@ -32,12 +33,22 @@ public class LoginSuccessTest extends TestSetup{
 		loginPage.navigateToURL();
 		logger.info("{} has navigated to landing page", TestCaseName.convert(method.getName()));
 
-		loginPage.completeLogin(password, loginPage);
-		logger.info("{} has successfully entered user email and password", TestCaseName.convert(method.getName()));
+		loginPage.checkForPreviousLoginFailure();
+		logger.info("{} has checked for previous login failure", TestCaseName.convert(method.getName()));
 
+		loginPage.navigateToLanding();
+		logger.info("{} has successfully navigated to landing page", TestCaseName.convert(method.getName()));
+
+		loginPage.enterUserEmail(email);
+		logger.info("{} has successfully entered user email", TestCaseName.convert(method.getName()));
+
+		loginPage.enterUserPassword(password);
+		logger.info("{} has successfully entered user password", TestCaseName.convert(method.getName()));
 		logger.info("{} has successfully completed login process", TestCaseName.convert(method.getName()));
 
 		LogoutPage.openAccountMenu();
+		logger.info("{} has successfully opened account menu", TestCaseName.convert(method.getName()));
+
 		LogoutPage.logout();
 		logger.info("{} has successfully completed logout process", TestCaseName.convert(method.getName()));
 	}

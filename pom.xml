@@ -69,6 +69,11 @@
             <version>1.18.26</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.5.2</version>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -122,7 +127,7 @@
                         or ${wipTag})"
                         -Dcucumber.execution.dry-run=${dryRun}
                     </argLine>
-                    <systemProperties>
+                    <systemPropertyVariables>
                         <property>
                             <name>parallel</name>
                             <value>methods</value>
@@ -139,7 +144,7 @@
                             <name>allure.results.directory</name>
                             <value>${basedir}/target/allure-results</value>
                         </property>
-                    </systemProperties>
+                    </systemPropertyVariables>
                 </configuration>
                 <dependencies>
                     <dependency>

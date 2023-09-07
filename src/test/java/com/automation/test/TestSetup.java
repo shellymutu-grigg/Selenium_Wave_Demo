@@ -1,7 +1,7 @@
 package com.automation.test;
 
 import java.lang.reflect.Method;
-import java.net.SocketException;
+import com.tidal.wave.browser.Browser;
 import java.text.MessageFormat;
 
 import com.automation.test.data.ConfigData;
@@ -57,7 +57,7 @@ public class TestSetup {
 	@AfterClass(alwaysRun = true)
 	public void closeWebDriver () {
 		if (getDriver()!=null) {
-			getDriver().close();
+			Browser.close();
 		}
 	}
 
