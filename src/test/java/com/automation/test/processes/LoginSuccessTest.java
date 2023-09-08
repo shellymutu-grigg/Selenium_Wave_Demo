@@ -3,16 +3,14 @@ package com.automation.test.processes;
 import com.automation.test.TestSetup;
 import com.automation.test.actions.TestCaseName;
 import com.automation.test.data.ConfigData;
+import com.automation.test.tasks.LogoutPage;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import resources.ExtentListeners;
 
 import java.lang.reflect.Method;
 
-@Listeners(ExtentListeners.class)
 @Slf4j
 public class LoginSuccessTest extends TestSetup{
 	String email = System.getenv(ConfigData.AMAZON_USERNAME);

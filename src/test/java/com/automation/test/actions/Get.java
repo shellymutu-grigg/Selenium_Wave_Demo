@@ -1,13 +1,13 @@
 package com.automation.test.actions;
 
-import com.automation.test.data.ConfigData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.automation.test.data.ConfigData;
 
 public class Get {
 
