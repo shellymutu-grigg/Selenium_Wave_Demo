@@ -61,8 +61,8 @@ public class LoginPage implements ITestListener{
 			validateLoginFailure(LoginLocators.LOGIN_FAIL_ALERT_MESSAGE_ID, TextData.LOGIN_FAILURE_ALERT_TEXT);
 		}
 		else if(findAll(LoginLocators.LOGIN_FAIL_PUZZLE_ID).isPresent()) {
-			loginFailStatus =  TextData.LOGIN_PUZZLE_TEXT;
-			validateLoginFailure(LoginLocators.LOGIN_FAIL_PUZZLE_MESSAGE_ID, TextData.LOGIN_PUZZLE_TEXT);
+			loginFailStatus =  TextData.LOGIN_FAILURE_PUZZLE_TEXT;
+			validateLoginFailure(LoginLocators.LOGIN_FAIL_PUZZLE_MESSAGE_ID, TextData.LOGIN_FAILURE_PUZZLE_TEXT);
 		}
 		else if(findAll(LoginLocators.LOGIN_FAIL_IMPORTANT_MESSAGE_ID).isPresent()) {
 			loginFailStatus = TextData.LOGIN_FAILURE_IMPORTANT_MESSAGE_TEXT;
