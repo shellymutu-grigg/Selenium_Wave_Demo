@@ -1,9 +1,9 @@
 package com.automation.test.processes;
 
-import com.automation.test.TestSetup;
 import com.automation.test.actions.TestCaseName;
 import com.automation.test.data.ConfigData;
 import com.automation.test.tasks.LogoutPage;
+import com.automation.test.TestSetup;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

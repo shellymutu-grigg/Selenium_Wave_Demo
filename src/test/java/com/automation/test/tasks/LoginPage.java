@@ -3,6 +3,8 @@ package com.automation.test.tasks;
 import com.tidal.wave.browser.Browser;
 import static com.tidal.wave.webelement.ElementFinder.find;
 import static com.tidal.wave.webelement.ElementFinder.findAll;
+
+import org.testng.Assert;
 import org.testng.ITestListener;
 
 import com.automation.test.actions.Get;
@@ -50,5 +52,27 @@ public class LoginPage implements ITestListener{
 			LogoutPage.logout();
 			Browser.open(Get.url());
 		}
+	}
+
+	public String loginFail() {
+		String loginFailStatus = "";
+		if(findAll(LoginLocators.LOGIN_FAIL_ALERT_ID).isPresent()) {
+			loginFailStatus = TextData.LOGIN_FAILURE_ALERT_TEXT;
+			validateLoginFailure(LoginLocators.LOGIN_FAIL_ALERT_MESSAGE_ID, TextData.LOGIN_FAILURE_ALERT_TEXT);
+		}
+		else if(findAll(LoginLocators.LOGIN_FAIL_PUZZLE_ID).isPresent()) {
+			loginFailStatus =  TextData.LOGIN_PUZZLE_TEXT;
+			validateLoginFailure(LoginLocators.LOGIN_FAIL_PUZZLE_MESSAGE_ID, TextData.LOGIN_PUZZLE_TEXT);
+		}
+		else if(findAll(LoginLocators.LOGIN_FAIL_IMPORTANT_MESSAGE_ID).isPresent()) {
+			loginFailStatus = TextData.LOGIN_FAILURE_IMPORTANT_MESSAGE_TEXT;
+			validateLoginFailure(LoginLocators.LOGIN_FAIL_IMPORTANT_MESSAGE_ID, TextData.LOGIN_FAILURE_IMPORTANT_MESSAGE_TEXT);
+		}
+		return loginFailStatus;
+	}
+
+	public void validateLoginFailure(String elementMessageText, String expectedText) {
+		String messageText = Objects.requireNonNull(find(elementMessageText)).getText();
+		Assert.assertEquals(messageText, expectedText);
 	}
 }

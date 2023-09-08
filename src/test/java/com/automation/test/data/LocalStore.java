@@ -10,4 +10,9 @@ public class LocalStore {
         // Store the global variable
         localStore.get().put(key, object);
     }
+
+    public static Object getObject(String key){
+        // Retrieve global variable
+        return localStore.get().get(key);
+    }
 }
