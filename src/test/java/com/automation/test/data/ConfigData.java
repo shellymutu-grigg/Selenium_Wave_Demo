@@ -11,5 +11,6 @@ public class ConfigData {
 	public static final String EDGE_MICROSOFT_DRIVER = "MicrosoftEdge";
 	public static final String FIREFOX_DRIVER = "firefox";
 	public final static String SYSTEM_PROPERTY_BROWSER = "Browser";
+	public final static String SYSTEM_PROPERTY_WEBDRIVERWAIT = "WebDriverWait";
 	public final static String SYSTEM_PROPERTY_YOUR_ACCOUNT = "YourAccount";
 }

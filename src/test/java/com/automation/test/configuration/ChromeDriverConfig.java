@@ -1,9 +1,9 @@
 package com.automation.test.configuration;
 
 import com.automation.test.actions.Get;
+import com.tidal.wave.browser.Browser;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import com.tidal.wave.browser.Browser;
 
 import java.time.Duration;
 
