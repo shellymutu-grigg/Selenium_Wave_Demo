@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.8</java-version>
         <wave-version>1.3.2-SNAPSHOT</wave-version>
-        <flow-version>1.1.0</flow-version>
+        <flow-version>1.1.1</flow-version>
         <slf4j-log4j12-version>2.0.5</slf4j-log4j12-version>
         <slf4j-api-version>2.0.9</slf4j-api-version>
         <lombok-version>1.18.28</lombok-version>
@@ -162,24 +162,12 @@
                         or ${wipTag})"
                         -Dcucumber.execution.dry-run=${dryRun}
                     </argLine>
-                    <systemProperties>
-                        <property>
-                            <name>parallel</name>
-                            <value>methods</value>
-                        </property>
-                        <property>
-                            <name>perCoreThreadCount</name>
-                            <value>false</value>
-                        </property>
-                        <property>
-                            <name>dataproviderthreadcount</name>
-                            <value>${parallelSessions}</value>
-                        </property>
-                        <property>
-                            <name>allure.results.directory</name>
-                            <value>${basedir}/target/allure-results</value>
-                        </property>
-                    </systemProperties>
+                    <systemPropertyVariables>
+                        <parallel>methods</parallel>
+                        <perCoreThreadCount>false</perCoreThreadCount>
+                        <dataproviderthreadcount>${parallelSessions}</dataproviderthreadcount>
+                        <allure.results.directory>${basedir}/target/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -199,7 +187,6 @@
                     <target>8</target>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>
