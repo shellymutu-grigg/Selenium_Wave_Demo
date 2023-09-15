@@ -7,6 +7,9 @@
 			<include name="LoginSuccess"/>
 		</run>
 	</groups>
+	<listeners>
+		<listener class-name="com.automation.test.configuration.SetupListener"/>
+	</listeners>
   	
 	<test thread-count="5" name="Login Success">
     	<classes>

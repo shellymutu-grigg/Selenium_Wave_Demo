@@ -8,7 +8,7 @@ import java.time.Duration;
 
 public class EdgeDriverConfig {
 
-	public static void edgeDriverSetup() {
+	public static void setupEdgeDriver() {
 		EdgeOptions edgeOptions = new EdgeOptions();
 		//edgeOptions.addArguments("--headless=new");
 		edgeOptions.addArguments("window-size=1920,1080");

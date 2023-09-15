@@ -8,7 +8,7 @@ import java.time.Duration;
 
 public class FirefoxDriverConfig {
 
-	public static void firefoxDriverSetup() {
+	public static void setupFirefoxDriver() {
 		FirefoxOptions firefoxOptions = new FirefoxOptions();
 		//firefoxOptions.addArguments("--headless=new");
 		firefoxOptions.addArguments("window-size=1920,1080");

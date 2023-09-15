@@ -1,10 +1,10 @@
 package com.automation.test.tasks;
 
 import com.tidal.wave.browser.Browser;
+
 import static com.tidal.wave.webelement.ElementFinder.find;
 import static com.tidal.wave.webelement.ElementFinder.findAll;
 
-import org.testng.Assert;
 import org.testng.ITestListener;
 
 import com.automation.test.actions.Get;
@@ -16,6 +16,10 @@ import com.automation.test.locators.LoginLocators;
 import java.util.Objects;
 
 public class LoginPage implements ITestListener{
+
+	public LogoutPage initialiseLogoutPage() {
+		return new LogoutPage();
+	}
 
 	public void navigateToURL() {
 		// If the user encounters an amazon security prompt click 'Try different image' link to navigate to landing page
@@ -47,32 +51,28 @@ public class LoginPage implements ITestListener{
 	
 	public void checkForPreviousLoginFailure() {
 		String accountListText = Objects.requireNonNull(find(LoginLocators.ACCOUNT_MENU_ID).getText());
-		if(!accountListText.contains(TextData.LOGGED_OUT_TEXT)) {
+		if(!accountListText.contains(TextData.LANDING_PAGE_SIGN_IN_TEXT)) {
 			LogoutPage.openAccountMenu();
 			LogoutPage.logout();
 			Browser.open(Get.url());
 		}
 	}
 
-	public String loginFail() {
-		String loginFailStatus = "";
-		if(findAll(LoginLocators.LOGIN_FAIL_ALERT_ID).isPresent()) {
-			loginFailStatus = TextData.LOGIN_FAILURE_ALERT_TEXT;
-			validateLoginFailure(LoginLocators.LOGIN_FAIL_ALERT_MESSAGE_ID, TextData.LOGIN_FAILURE_ALERT_TEXT);
+	public String findLoginFailureText() {
+		String failureText = null;
+		if(findAll(LoginLocators.LOGIN_FAIL_IMPORTANT_MESSAGE_ID).size() > 0){
+			System.out.println("findAll(LoginLocators.LOGIN_FAIL_IMPORTANT_MESSAGE_ID).size() > 0: " + findAll(LoginLocators.LOGIN_FAIL_IMPORTANT_MESSAGE_ID).size());
+			failureText =  TextData.LOGIN_FAILURE_IMPORTANT_MESSAGE_TEXT;
 		}
-		else if(findAll(LoginLocators.LOGIN_FAIL_PUZZLE_ID).isPresent()) {
-			loginFailStatus =  TextData.LOGIN_FAILURE_PUZZLE_TEXT;
-			validateLoginFailure(LoginLocators.LOGIN_FAIL_PUZZLE_MESSAGE_ID, TextData.LOGIN_FAILURE_PUZZLE_TEXT);
+		else if(findAll(LoginLocators.LOGIN_FAIL_PUZZLE_ID).size() > 0){
+			System.out.println("findAll(LoginLocators.LOGIN_FAIL_PUZZLE_MESSAGE_ID).size() > 0: " + findAll(LoginLocators.LOGIN_FAIL_PUZZLE_MESSAGE_ID).size());
+			failureText = TextData.LOGIN_FAILURE_PUZZLE_TEXT;
 		}
-		else if(findAll(LoginLocators.LOGIN_FAIL_IMPORTANT_MESSAGE_ID).isPresent()) {
-			loginFailStatus = TextData.LOGIN_FAILURE_IMPORTANT_MESSAGE_TEXT;
-			validateLoginFailure(LoginLocators.LOGIN_FAIL_IMPORTANT_MESSAGE_ID, TextData.LOGIN_FAILURE_IMPORTANT_MESSAGE_TEXT);
+		else if(findAll(LoginLocators.LOGIN_FAIL_ALERT_ID).size() > 0){
+			System.out.println("findAll(LoginLocators.LOGIN_FAIL_ALERT_MESSAGE_ID).size() > 0: " + findAll(LoginLocators.LOGIN_FAIL_ALERT_MESSAGE_ID).size());
+			failureText = TextData.LOGIN_FAILURE_ALERT_TEXT;
 		}
-		return loginFailStatus;
-	}
-
-	public void validateLoginFailure(String elementMessageText, String expectedText) {
-		String messageText = Objects.requireNonNull(find(elementMessageText)).getText();
-		Assert.assertEquals(messageText, expectedText);
+		System.out.println("failureText: " + failureText);
+		return failureText;
 	}
 }

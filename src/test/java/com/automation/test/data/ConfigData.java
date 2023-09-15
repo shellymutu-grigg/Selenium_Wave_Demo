@@ -8,9 +8,8 @@ public class ConfigData {
 	public final static String BROWSER="browser";
 	public static final String CHROME_DRIVER = "chrome";
 	public static final String EDGE_DRIVER = "edge";
-	public static final String EDGE_MICROSOFT_DRIVER = "MicrosoftEdge";
 	public static final String FIREFOX_DRIVER = "firefox";
+	public static final String HEADLESS="headless";
 	public final static String SYSTEM_PROPERTY_BROWSER = "Browser";
-	public final static String SYSTEM_PROPERTY_WEBDRIVERWAIT = "WebDriverWait";
 	public final static String SYSTEM_PROPERTY_YOUR_ACCOUNT = "YourAccount";
 }

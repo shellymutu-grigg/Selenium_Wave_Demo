@@ -17,7 +17,7 @@ public class LogoutPage {
 	}
 	
 	public static void logout() {
-		find(LogoutLocators.LOGOUT_LINK_ID).click();
+		find(LogoutLocators.SIGN_OUT_LINK_ID).click();
 		Browser.open(Get.url());
 	}
 }
